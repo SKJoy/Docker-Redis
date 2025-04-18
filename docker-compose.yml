@@ -1,0 +1,36 @@
+services:
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+    volumes:
+      - ${REDIS_VOLUME_PATH}Configuration:/usr/local/etc/redis
+      - ${REDIS_VOLUME_PATH}Data:/data
+      - ${REDIS_VOLUME_PATH}Log:/var/log/redis
+    ports:
+      - ${REDIS_IP}:${REDIS_PORT}:6379
+    command: bash -c "chown -R redis:root /usr/local/etc/redis && chown -R redis:root /var/log/redis && redis-server /usr/local/etc/redis/redis.conf"
+
+  redis-commander:
+    image: ghcr.io/joeferner/redis-commander:latest
+    depends_on:
+      - redis
+    restart: unless-stopped
+    environment:
+      # - REDIS_HOSTS=Docker:${REDIS_IP}:${REDIS_PORT}
+      - URL_PREFIX=${REDIS_COMMANDER_URL_PREFIX}
+      - HTTP_USER=${REDIS_COMMANDER_USER}
+      - HTTP_PASSWORD=${REDIS_COMMANDER_PASSWORD}
+      - REDIS_HOST=${REDIS_IP}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_USERNAME=${REDIS_USER}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    ports:
+      - ${REDIS_COMMANDER_IP}:${REDIS_COMMANDER_HTTP_PORT}:8081
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "${DOCKER_NETWORK_PREFIX}0/24"
