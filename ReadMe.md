@@ -18,8 +18,8 @@ Docker based `Redis` server with `Redis Commander` management panel. Fully funct
 - Check `REDIS_COMMANDER_USER` & `REDIS_COMMANDER_PASSWORD` for access credentials
 
 ## How to
+- **Start**: Execute `ReStart.sh` script or use `docker compose up -d` command
 - ### `Redis`
-    - **Start**: Execute `ReStart.sh` script or use `docker compose up -d` command
     - **Connection**: Check `REDIS_IP`, `REDIS_PORT` and **ACL** user credential
     - Add new **user**: `ACL SETUSER username ON >password ~* &* +@all`
     - Add **password** for **user**: `ACL SETUSER username ON >anotherpassword ~* &* +@all`
