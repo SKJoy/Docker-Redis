@@ -39,6 +39,8 @@ Docker based `Redis` server with `Redis Commander` management panel. Fully funct
     - `Data` will be flushed
     - `Log` will be flushed
     - User **ACL** will not be reset
+- ### Docker
+    - Change internal **IP**: Check `DOCKER_NETWORK_PREFIX`; Do not add the 4th octek
 
 ## Reference
 - `Redis` Docker image: `https://hub.docker.com/_/redis`
